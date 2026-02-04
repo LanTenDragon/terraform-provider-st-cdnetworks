@@ -11,6 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/myklst/terraform-provider-st-cdnetworks/cdnetworks/utils"
@@ -35,6 +36,7 @@ type headerRuleModel struct {
 	RequestMethod     types.String `tfsdk:"request_method"`
 	RequestHeader     types.String `tfsdk:"request_header"`
 	Override          types.Bool   `tfsdk:"override"`
+	Priority          types.Int64  `tfsdk:"priority"`
 }
 
 type httpHeaderConfigModel struct {
@@ -206,6 +208,12 @@ func (r *httpHeaderConfigResource) Schema(_ context.Context, req resource.Schema
 						"override": &schema.BoolAttribute{
 							Description: "If set to true, creates a new header or overwrite the existing header value. If set to false, appends a new header. Only applies to these two directions, cache2origin and cache2visitor.",
 							Optional:    true,
+						},
+						"priority": &schema.Int64Attribute{
+							Description: "The priority of the execution order. The bigger the number, the higher the priority.",
+							Optional:    true,
+							Computed:    true,
+							Default:     int64default.StaticInt64(10),
 						},
 					},
 				},
@@ -464,6 +472,7 @@ func (r *httpHeaderConfigResource) updateConfig(model *httpHeaderConfigModel, de
 				HeaderName:        ruleModel.HeaderName.ValueStringPointer(),
 				HeaderValue:       ruleModel.HeaderValue.ValueStringPointer(),
 				Override:          ruleModel.Override.ValueBoolPointer(),
+				Priority:          ruleModel.Priority.ValueInt64Pointer(),
 			}
 
 			rules = append(rules, rule)
@@ -532,6 +541,7 @@ func (r *httpHeaderConfigResource) updateModel(model *httpHeaderConfigModel) err
 				HeaderValue:       types.StringPointerValue(rule.HeaderValue),
 				RequestHeader:     types.StringPointerValue(rule.RequestHeader),
 				Override:          types.BoolPointerValue(rule.Override),
+				Priority:          types.Int64PointerValue(rule.Priority),
 			}
 			model.Rules = append(model.Rules, ruleModel)
 		}
@@ -607,6 +617,7 @@ func (r *httpHeaderConfigResource) readModel(model *httpHeaderConfigModel) error
 					HeaderValue:       types.StringPointerValue(rule.HeaderValue),
 					RequestHeader:     types.StringPointerValue(rule.RequestHeader),
 					Override:          types.BoolPointerValue(rule.Override),
+					Priority:          types.Int64PointerValue(rule.Priority),
 				})
 
 				headerIds[*rule.HeaderName] = *rule.DataId

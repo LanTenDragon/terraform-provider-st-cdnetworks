@@ -436,6 +436,7 @@ type HeaderModifyRule struct {
 	HeaderName        *string `json:"header-name,omitempty" xml:"header-name,omitempty"`
 	HeaderValue       *string `json:"header-value,omitempty" xml:"header-value,omitempty"`
 	Override          *bool   `json:"override,omitempty" xml:"override,omitempty"`
+	Priority          *int64  `json:"priority,omitempty" xml:"priority,omitempty"`
 }
 
 // QueryHttpConfig 查询http头配置接口

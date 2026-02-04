@@ -98,6 +98,7 @@ Optional:
 #cookie{XXX} : get the value in the cookie, such as #cookie{account}, is to get the value of the account set in the cookie
 - `override` (Boolean) If set to true, creates a new header or overwrite the existing header value. If set to false, appends a new header. Only applies to these two directions, cache2origin and cache2visitor.
 - `path_pattern` (String) The url matching mode supports fuzzy regularization. If all matches, the input parameters can be configured as: *
+- `priority` (Number) The priority of the execution order. The bigger the number, the higher the priority.
 - `request_header` (String) Match request header, header values support regular, header and header values separated by Spaces, e.g. : Range bytes=[0-9]{9,}
 - `request_method` (String) The matching request method, the optional values are: GET, POST, PUT, HEAD, DELETE, OPTIONS, separate by semicolons.
 - `specify_url_pattern` (String) Matching Condition: Specify URL. The input parameter does not support the URI format starting with http(s)://
