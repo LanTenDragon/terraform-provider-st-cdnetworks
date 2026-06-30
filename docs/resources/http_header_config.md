@@ -35,11 +35,7 @@ resource "st-cdnetworks_http_header_config" "test" {
 
 ### Optional
 
-- `header_rule` (Block Set) Header rule (see [below for nested schema](#nestedblock--header_rule))
-
-### Read-Only
-
-- `header_ids` (Map of Number)
+- `header_rule` (Block List) Header rule (see [below for nested schema](#nestedblock--header_rule))
 
 <a id="nestedblock--header_rule"></a>
 ### Nested Schema for `header_rule`
@@ -57,6 +53,7 @@ Optional:
                             Do not pass the default is false
 - `custom_file_type` (String) Matching condition: Custom file type, separate by semicolon.
 - `custom_pattern` (String) Matching conditions: specify common types, optional values are all or homepage. 1. all: all files 2. homepage: home page
+- `data_id` (Number) Used to keep track of vendor-added header rules. Prevents vendor-added rules from being overwritten.
 - `directory` (String) directory
 - `except_path_pattern` (String) Exception url matching pattern, support regular. Example:
 - `file_type` (String) Matching conditions: file type, please separate by semicolon, optional values: gif png bmp jpeg jpg html htm shtml mp3 wma flv mp4 wmv zip exe rar css txt ico js swf m3u8 xml f4m bootstarp ts.

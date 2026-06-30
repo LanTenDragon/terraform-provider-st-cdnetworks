@@ -547,7 +547,7 @@ func (r *httpHeaderConfigResource) readModel(model *httpHeaderConfigModel) error
 		}
 
 		for _, rule := range queryHttpConfigResponse.HeaderModifyRules {
-			if state.ContainsOne(*rule.HeaderName) { // TODO Evaluate whether this mapset is still needed
+			if state.ContainsOne(*rule.HeaderName) {
 
 				exceptPathPattern := ""
 				if rule.ExceptPathPattern != nil {
